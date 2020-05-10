@@ -1,0 +1,6 @@
+name: quantum-environment
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - cirq
