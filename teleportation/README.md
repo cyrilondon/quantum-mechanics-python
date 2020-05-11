@@ -15,8 +15,8 @@ You have several options:
     - uncomments the two lines of the first cell to install Cirq on the machine
   
 ```python
-!pip install --upgrade pip
-!pip install cirq==0.8.0
+pip install --upgrade pip
+pip install cirq==0.8.0
 ```
   
    wait until all the packages have been installed
@@ -57,7 +57,7 @@ python -m pip install --upgrade pip
 python -m pip install cirq
 ```
 
-Run `cirq_teleportation.py`
+Execute `python cirq_teleportation.py`
 
 Enjoy!
 
