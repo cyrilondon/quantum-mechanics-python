@@ -63,7 +63,7 @@ Enjoy!
 
 ## Program
 
-We bring the `msg` qubit to be teleported in a random state, which as we know can be represented on the unit Bloch Sphere as a point with coordinates x,y, and z.
+We bring the `msg` qubit to be teleported in a random state, which as we know can be represented on the unit Bloch Sphere as a point with coordinates x, y and z.
 Those coordinates are printed out on the console.
 
 ```python 
@@ -77,7 +77,7 @@ Those coordinates are printed out on the console.
       "z: ", np.around(expected[2], 4))
 ```
 
-We apply the teleportation circuit to the three qubits
+We apply the teleportation circuit to the three qubits msg, alice and bob
 
 ```python 
  # Creates Bell state to be shared between Alice and Bob.
@@ -92,7 +92,7 @@ We apply the teleportation circuit to the three qubits
  circuit.append([cirq.CNOT(alice, bob), cirq.CZ(msg, bob)])
 ```
 
-Finally we print out the bob qubit, and can check that it is represented by exactly the same point on the Bloch Sphere:
+Finally we print out the bob qubit, and we check that it is represented by exactly the same point on the Bloch Sphere:
 
 ```python 
  print("\nBloch Sphere of Qubit 2 at Final State:")
