@@ -9,8 +9,8 @@
 # In[137]:
 
 
-#!pip install --upgrade pip
-#!pip install cirq==0.8.0
+#python -m pip install --upgrade pip
+#python -m pip install cirq
 
 
 # Required imports
