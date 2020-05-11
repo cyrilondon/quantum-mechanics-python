@@ -8,5 +8,5 @@ As for now, it provides the implementation of:
 
 It uses the quantum python Google [API Cirq](https://cirq.readthedocs.io/en/stable/index.html).
 
-3. Follow the instructions and read the documentation of each sub-project:
+Follow the instructions and read the documentation of each sub-project:
   [Teleportation Algorithm](teleportation)
