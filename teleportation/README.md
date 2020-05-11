@@ -15,7 +15,7 @@ You have several options:
     - uncomments the two lines of the first cell to install Cirq on the machine
   
 ```python
-pip install \-\-upgrade pip
+pip install --upgrade pip
 pip install cirq==0.8.0
 ```
   
@@ -53,7 +53,7 @@ x:  0.7623 y:  -0.4853 z:  -0.4283
      - install Cirq via 
     
 ```python   
-python -m pip install \-\-upgrade pip
+python -m pip install --upgrade pip
 python -m pip install cirq
 ```
 
