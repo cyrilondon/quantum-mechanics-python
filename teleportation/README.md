@@ -61,7 +61,47 @@ Execute `python cirq_teleportation.py`
 
 Enjoy!
 
+## Program
 
+We bring the `msg` qubit to be teleported in a random state, which as we know can be represented on the unit Bloch Sphere as a point with coordinates x,y, and z.
+Those coordinates are printed out on the console.
+
+```python 
+ q0 = cirq.LineQubit(0)
+ message = sim.simulate(cirq.Circuit([cirq.X(q0)**ranX, cirq.Y(q0)**ranY]))
+
+ print("\nBloch Sphere of Message After Random X and Y Gates:")
+ # Prints the Bloch Sphere of the Message after the X and Y gates.
+ expected = cirq.bloch_vector_from_state_vector(message.final_state, 0)
+ print("x: ", np.around(expected[0], 4), "y: ", np.around(expected[1], 4),
+      "z: ", np.around(expected[2], 4))
+```
+
+We apply the teleportation circuit to the three qubits
+
+```python 
+ # Creates Bell state to be shared between Alice and Bob.
+ circuit.append([cirq.H(alice), cirq.CNOT(alice, bob)])
+ # Creates a random state for the Message.
+ circuit.append([cirq.X(msg)**ranX, cirq.Y(msg)**ranY])
+ # Bell measurement of the Message and Alice's entangled qubit.
+ circuit.append([cirq.CNOT(msg, alice), cirq.H(msg)])
+ circuit.append(cirq.measure(msg, alice))
+ # Uses the two classical bits from the Bell measurement to recover the
+ # original quantum Message on Bob's entangled qubit.
+ circuit.append([cirq.CNOT(alice, bob), cirq.CZ(msg, bob)])
+```
+
+Finally we print out the bob qubit, and can check that it is represented by exactly the same point on the Bloch Sphere:
+
+```python 
+ print("\nBloch Sphere of Qubit 2 at Final State:")
+ # Prints the Bloch Sphere of Bob's entangled qubit at the final state.
+ teleported = cirq.bloch_vector_from_state_vector(final_results.final_state,
+                                                     2)
+ print("x: ", np.around(teleported[0], 4), "y: ",
+ np.around(teleported[1], 4), "z: ", np.around(teleported[2], 4))
+```
 
 
 
