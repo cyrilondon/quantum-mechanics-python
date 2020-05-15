@@ -10,7 +10,7 @@ Provides Criq Python implementation of the teleportation quantum algorithm as in
 
 You have several options:
 
- 1. The simplest way of executing the algorithm is to execute the Python Jupiter notebook by clicking the icon [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cyrilondon/quantum-mechanics-python/master)
+ 1. The simplest way of executing the algorithm is to execute the Python Jupyter Notebook by clicking the icon [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cyrilondon/quantum-mechanics-python/master)
     - double-click the `teleportation/cirq_teleportation.ipynb` notebook
     - uncomments the two lines of the first cell to install Cirq on the machine
   
