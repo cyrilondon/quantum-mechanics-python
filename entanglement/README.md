@@ -22,9 +22,9 @@ And you may also find it useful to read this article [Introduction-to-entangleme
 
 You have several options:
 
- 1. The simplest way of executing the algorithm is to execute the Python Jupyter notebook by clicking the icon [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cyrilondon/quantum-mechanics-python/master)
+ 1. The simplest way of executing the algorithm is to execute the Python Jupyter notebook remotely on a machine by clicking the icon [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cyrilondon/quantum-mechanics-python/master)
     - double-click the `entanglement/cirq_entanglement.ipynb` notebook
-    - place yourself into the first cell and click execute to to install Cirq on the machine
+    - place yourself into the first cell and click execute to install Cirq on the machine
   
 ```python
 pip install --upgrade pip
@@ -54,3 +54,20 @@ Results:
 0=10100001111000001100
 1=01011110000111110011
 ```
+
+You have executed the Notebook directly in your browser!
+ 
+ 2. If you have Python installed on your local computer
+      
+     - clone the project
+ 
+     - install Cirq via 
+    
+```python   
+python -m pip install --upgrade pip
+python -m pip install cirq
+```
+
+Execute `python cirq_entanglement.py`
+
+Enjoy!
