@@ -6,6 +6,7 @@ This project provides a Python implementation of some well-known quantum algorit
 As for now, it provides the implementation of:
 - [Entanglement circuit](entanglement)
 - [Teleportation Algorithm](teleportation)
+- [Deutsch Algorithm](deutsch)
 
 It uses the quantum python Google [API Cirq](https://cirq.readthedocs.io/en/stable/index.html).
 
