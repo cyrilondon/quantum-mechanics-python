@@ -36,3 +36,64 @@ Enjoy!
 The quantum circuit implementing the Deutsch algorithm is shown below
 
 <img src="images/deutsch_circuit.png"/>
+
+In a few words, we bring two qubits in a superposition state via a Hadamard gate, we then apply a `quantum oracle` to this 2-qubit state and finally we make a measurement of the first qubit.
+
+These main three steps are defined in the function  `make_deutsch_circuit`
+
+```python 
+def make_deutsch_circuit(q0, q1, oracle):
+    c = cirq.Circuit()
+
+    # Initialize qubits.
+    c.append([X(q1), H(q1), H(q0)])
+
+    # Query oracle.
+    c.append(oracle)
+
+    # Measure in X basis.
+    c.append([H(q0), measure(q0, key='result')])
+    return c
+```
+
+This (unique) measure will be enough to determine the nature of the function, at least if she is `constant` or `balanced`.
+
+### Quantum Oracle
+
+The most interesting of the program concerns the second step of the algorithm, i.e. the quantum oracle.
+
+<img src="images/deutsch_oracle.png"/>
+
+The oracle maps the state |x>|y> to |x>|y XOR f(x)> , where + is addition modulo 2.
+In other words, the oracle leaves the |x> qubit in its original state, and the |y> qubit is replaced by the XOR operation between y and f(x).
+
+Let us first consider the case where `f(x)= 0`.
+
+The output |x>|y XOR f(x)> equates |x>|y XOR 0> which equates the input |x>|y>, which means basically that the Oracle in this case should do NOTHING.
+
+If we check the piece of code which generates the Oracle
+
+```python 
+
+# Pick a secret 2-bit function and create a circuit to query the oracle.
+  secret_function = [random.randint(0, 1) for _ in range(2)]
+  oracle = make_oracle(q0, q1, secret_function)
+    
+def make_oracle(q0, q1, secret_function):
+    """ Gates implementing the secret function f(x)."""
+
+    if secret_function[0]:
+        yield [CNOT(q0, q1), X(q1)]
+
+    if secret_function[1]:
+        yield CNOT(q0, q1)
+```
+
+
+
+
+
+
+
+
+
