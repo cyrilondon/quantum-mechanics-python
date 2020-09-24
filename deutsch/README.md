@@ -27,8 +27,12 @@ python -m pip install --upgrade pip
 python -m pip install cirq
 ```
 
-Execute `deutschs.py`
+Execute `deutsch.py`
 
 Enjoy!
 
 ## Program
+
+The quantum circuit implementing the Deutsch algorithm is shown below
+
+<img src="images/deutsch_circuit.png"/>
