@@ -69,7 +69,7 @@ In other words, the oracle leaves the |x> qubit in its original state, and the |
 
 Let us first consider the case where `f(x)= 0`.
 
-The output |x>|y XOR f(x)> equates |x>|y XOR 0> which equates the input |x>|y>, which means basically that the Oracle in this case should do NOTHING.
+The output |x>|y XOR f(x)> equates |x>|y XOR 0> that equates the input |x>|y>, which means basically that the Oracle in this case should do NOTHING.
 
 If we check the piece of code which generates the Oracle
 
@@ -88,6 +88,31 @@ def make_oracle(q0, q1, secret_function):
     if secret_function[1]:
         yield CNOT(q0, q1)
 ```
+
+if we have f(x)=0  then secret_function[0] = 0 and secret_function[1] = 0 so that the function make_oracle returns without any oracle.
+
+Let us consider now the case f(x)=x:
+
+<img src="images/CNot.gif"/>
+
+We can check that if f(0)=0 and f(1)=1 the function make_oracle returns actually the CNOT gate.
+
+Another thing that we can verify is that we measure 1 at the end of the algorithm in case of applying a Cnot gate.
+
+The state just after the Oracle is
+
+<img src="images/CNot2.gif"/>
+
+So that applying the Hadamard gate to the first qubit state gives
+
+
+<img src="images/CNot3.gif"/>
+
+and the measurement is indeed 1.
+
+
+
+
 
 
 
