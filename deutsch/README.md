@@ -8,13 +8,44 @@ This python program provided as an example by Google Cirq implements the Deutsch
 
 You can refer to this article [The Deutsch-Jozsa algorithm](https://einsteinrelativelyeasy.com/index.php/quantum-mechanics/168-the-deutsch-jozsa-algorithm) on my website [einsteinrelativelyeasy.com](https://einsteinrelativelyeasy.com/) to read a quick introduction to this algorithm.
 
-During this article, we will particularly break down how the oracle works, and how they are implemented.
+During this article, we will particularly break down how the different quantum oracles are implemented.
 
 ### Getting Started
 
 You have several options:
 
  1. The simplest way of executing the algorithm is to execute the Python Jupyter notebook remotely on a machine by clicking the icon [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cyrilondon/quantum-mechanics-python/master)
+ 
+ Wait until the server is properly launched (after 46 steps - it should take no more than one minute)
+ 
+  - double-click the `deutsch/Deutsch_algorithm.ipynb` notebook
+  
+  - execute `Cell -> Run All`
+  
+    It will takes a little time until all the packages have been installed
+    
+```python
+Successfully installed cachetools-4.1.0 cirq-0.8.0 cycler-0.10.0 freezegun-0.3.15 google-api-core-1.17.0 google-auth-1.14.2 googleapis-common-protos-1.51.0 
+grpcio-1.28.1 kiwisolver-1.2.0 matplotlib-3.2.1 mpmath-1.1.0 networkx-2.4 numpy-1.18.4 pandas-1.0.3 protobuf-3.8.0
+ pyasn1-0.4.8 pyasn1-modules-0.2.8 pyparsing-2.4.7 pytz-2020.1 rsa-4.0 scipy-1.4.1 sortedcontainers-2.1.0 sympy-1.5.1 typing-extensions-3.7.4.2
+ ```
+ 
+ but then you should see the result at the bottom of the jupyter sheet, like this one
+ 
+ <img src="images/deutsch_f0.png"/>
+ 
+ Congratulations, you have run the Deutsch quantum algorithm! In only one measurement, you were able to qualify the function f(x)=0 as constant!
+ 
+ To re-run it, just place yourself in the main bottom cell
+ 
+ ```python
+ if __name__ == '__main__':
+    main()
+  ```
+ 
+ and execute it by clicking the small arrow on the left side.
+ 
+ 
    
  2. If you have Python installed on your local computer
       
@@ -27,7 +58,7 @@ python -m pip install --upgrade pip
 python -m pip install cirq
 ```
 
-Execute [deutsch.py](deutsch.py)
+Execute [deutsch.py](deutsch.py) or even better if you have a Jupiter notebook environment installed locally, run [Deutsch_algorithm.ipynb](Deutsch_algorithm.ipynb) locally on your favourite browser.
 
 Enjoy!
 
@@ -69,13 +100,15 @@ An oracle is a quantum operation represented by a unitary matrix O that transfor
 The oracle maps the state |x>|y> to |x>|y XOR f(x)> , where XOR is addition modulo 2.
 In other words, the oracle leaves the |x> qubit in its original state, and the |y> qubit is replaced by the XOR operation between y and f(x).
 
-#### f(x) = 0
+We knwo that the final state in which we should be just before the final measurement of the first qubit is
 
-Let us first consider the case where `f(x)= 0`.
+<img src="images/deutsch8.gif"/>
 
-The output |x>|y XOR f(x)> equates |x>|y XOR 0> that equates the input |x>|y>, which means basically that the Oracle in this case should do NOTHING to its input state.
+which could be broken down in the four following cases
 
-Looking at the code which generates the required Oracle
+<img src="images/deutsch92.gif"/>
+
+Finally, below is the code responsible for generating a quantum Oracle based on the randomly generated function
 
 ```python 
 
@@ -92,6 +125,17 @@ def make_oracle(q0, q1, secret_function):
     if secret_function[1]:
         yield CNOT(q0, q1)
 ```
+
+Our aim here will be to double-check that in each case, applying the quantum Oracle leads to the correct output state for the first qubit and thus to the expected measurement.
+
+#### f(x) = 0
+
+Let us first consider the case where `f(x)= 0`.
+
+<img src="images/deutsch_cirq2.gif"/>
+
+The output |x>|y XOR f(x)> equates |x>|y XOR 0> that equates the input |x>|y>, which means basically that the Oracle in this case should do NOTHING to its input state.
+
 
 we verify that with f(0)=0 and f(1)=0 then secret_function[0] = 0 and secret_function[1] = 0 so that the function `make_oracle` returns without giving any oracle.
 
@@ -110,28 +154,31 @@ If you need to be convinced of the above statement, here is the proof:
 
 #### f(x) = x (ID)
 
-Let us consider now the case f(x)=x (identity function)
+The second case for which the quantum Oracle can be easily deduced is for f(x)=x (identity function)
 
 <img src="images/CNot.gif"/>
 
-If f(0)=0 and f(1)=1 the function `make_oracle` returns the CNOT gate, resulting in the following quantum circuit
+If f(0)=0 and f(1)=1 the function `make_oracle` returns indeed the CNOT gate, resulting in the following quantum circuit
 
 <img src="images/deutsch_f1.png"/>
-
-Let us make sure that we measure 1 at the end of the algorithm in case of applying a CNOT gate as the quantum Oracle.
 
 Applying the CNOT gate to the input (2 qubits in superposition state H|0>H|1>) gives
 
 <img src="images/CNot2.gif"/>
 
-So that applying the Hadamard gate to the first qubit state gives
+If you are more into matrix representation, you may rather follow this path as well
+
+<img src="images/deutsch_cirq7.gif"/>
+
+We are all good for the state of the first qubit before applying the Hadamard gate and measurement (refer to the above table mapping the function to the first qubit state just after the Oracle gate).
+We are now ready to verify that applying the Hadamard gate to the first qubit state leads as expected to a measure of 1:
 
 
 <img src="images/CNot3.gif"/>
 
-and the measurement gives indeed 1.
+which is the expected value.
 
-#### f(x) = -x  (NOT)
+#### f(x) = NOT x
 
 Considering now the case of f(0)=1 and f(1)=0 (f is balanced), we know that we should measure 1 as final measurement.
 
@@ -163,6 +210,7 @@ Compared to the previous quantum circuit, we just have to apply an extra CNOT ga
 The state of the first qubit is -1/sqrt2(|0> + |1), therefore we get 0 when measure it.
 
 CQFD.
+
 
 
 
